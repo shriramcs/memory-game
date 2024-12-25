@@ -21,7 +21,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <h2>
-        Memory Game
+      ನೆನಪು - Memory Game
       </h2>
       {!gameStarted ? (
         <UserPrompt onStartGame={handleStartGame} />
