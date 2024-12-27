@@ -51,3 +51,60 @@ button {
 button:hover {
   background-color: #45a049;
 }
+
+/* Success Banner */
+/* Keyframes for zoom-out animation */
+@keyframes zoomOut {
+  from {
+    transform: scale(0.5) translate(-50%, -50%);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+/* Success Banner */
+.banner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent background */
+  border: 2px solid #007BFF;
+  border-radius: 16px;
+  padding: 20px 40px;
+  text-align: center;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: zoomOut 0.5s ease-out; /* Apply the zoom-out animation */
+}
+
+.banner h2 {
+  font-size: 24px;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.banner .graffiti {
+  font-size: 32px;
+  margin: 10px 0;
+  color: #32CD32;
+}
+
+.banner button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #007BFF;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.banner button:hover {
+  background-color: #0056b3;
+}

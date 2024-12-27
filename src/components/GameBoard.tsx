@@ -9,6 +9,7 @@ interface GameBoardProps {
 interface Card {
   id: number;
   image: string;
+  color: string;
   matched: boolean;
 }
 
@@ -17,38 +18,35 @@ const GameBoard: React.FC<GameBoardProps> = ({ players, onRestart }) => {
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [scores, setScores] = useState<number[]>(Array(players.length).fill(0));
   const [currentPlayer, setCurrentPlayer] = useState(0);
+  const [gameOver, setGameOver] = useState(false);
+  const [winnerMessage, setWinnerMessage] = useState('');
 
   useEffect(() => {
     const images = [
-      '🍎',
-      '🍌',
-      '🍇',
-      '🍓',
-      '🍉',
-      '🍒',
-      '🍍',
-      '🥝',
-      '🍎',
-      '🍌',
-      '🍇',
-      '🍓',
-      '🍉',
-      '🍒',
-      '🍍',
-      '🥝',
+      '🍎', '🍌', '🍇', '🍓', '🍉', '🍒', '🍍', '🥝',
+      '🍎', '🍌', '🍇', '🍓', '🍉', '🍒', '🍍', '🥝',
+    ];
+    const colors = [
+      '#FF6347', '#FFD700', '#8A2BE2', '#FF69B4', '#32CD32', '#DC143C', '#FFA500', '#66CDAA',
+      '#FF6347', '#FFD700', '#8A2BE2', '#FF69B4', '#32CD32', '#DC143C', '#FFA500', '#66CDAA',
     ];
     const shuffledCards = images
-      .map((image, index) => ({ id: index, image, matched: false }))
+      .map((image, index) => ({ id: index, image, color: colors[index], matched: false }))
       .sort(() => Math.random() - 0.5);
     setCards(shuffledCards);
   }, []);
 
+  useEffect(() => {
+    const matchOver = cards && cards.length && cards.every((card) => card.matched);
+    console.log("useEffect on card change", cards, matchOver);
+    if (matchOver) {
+      setGameOver(true);
+      announceWinner();
+    }
+  }, [cards]);
+
   const handleCardClick = (index: number) => {
-    if (
-      flippedCards.length === 2 ||
-      cards[index].matched ||
-      flippedCards.includes(index)
-    ) {
+    if (gameOver || flippedCards.length === 2 || cards[index].matched || flippedCards.includes(index)) {
       return;
     }
 
@@ -59,9 +57,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ players, onRestart }) => {
       const [firstIndex, secondIndex] = newFlippedCards;
       if (cards[firstIndex].image === cards[secondIndex].image) {
         const updatedCards = cards.map((card, i) =>
-          i === firstIndex || i === secondIndex
-            ? { ...card, matched: true }
-            : card
+          i === firstIndex || i === secondIndex ? { ...card, matched: true } : card
         );
         setCards(updatedCards);
         const updatedScores = [...scores];
@@ -75,30 +71,46 @@ const GameBoard: React.FC<GameBoardProps> = ({ players, onRestart }) => {
     }
   };
 
+  const announceWinner = () => {
+    const maxScore = Math.max(...scores);
+    const winners = players.filter((_, index) => scores[index] === maxScore);
+
+    if (winners.length === 1) {
+      setWinnerMessage(`Winner: ${winners[0]} with ${maxScore} points!`);
+    } else {
+      setWinnerMessage(`It's a tie between ${winners.join(' and ')} with ${maxScore} points each!`);
+    }
+  };
+
   return (
     <div className="game-board">
-      <h2>Current Player: {players[currentPlayer]}</h2>
-      <div className="scores">
-        {players.map((player, index) => (
-          <div key={index}>
-            {player}: {scores[index]}
-          </div>
-        ))}
-      </div>
-      <div className="grid">
-        {cards.map((card, index) => (
-          <div
-            key={card.id}
-            className={`card ${
-              flippedCards.includes(index) || card.matched ? 'flipped' : ''
-            }`}
-            onClick={() => handleCardClick(index)}
-          >
-            {flippedCards.includes(index) || card.matched ? card.image : '?'}
-          </div>
-        ))}
-      </div>
-      <button onClick={onRestart}>Restart Game</button>
+      {gameOver && (
+        <div className="banner">
+          <h2>{winnerMessage}</h2>
+          <div className="graffiti">🎉 Congratulations! 🎉</div>
+          <button onClick={onRestart}>Restart Game</button>
+        </div>
+      )}
+      <>
+        <h2>Current Player: {players[currentPlayer]}</h2>
+        <div className="scores">
+          {players.map((player, index) => (
+            <div key={index}>{player}: {scores[index]}</div>
+          ))}
+        </div>
+        <div className="grid">
+          {cards.map((card, index) => (
+            <div
+              key={card.id}
+              className={`card ${flippedCards.includes(index) || card.matched ? 'flipped' : ''}`}
+              onClick={() => handleCardClick(index)}
+              style={{ backgroundColor: flippedCards.includes(index) || card.matched ? card.color : '#f0f0f0' }}
+            >
+              {flippedCards.includes(index) || card.matched ? card.image : '?'}
+            </div>
+          ))}
+        </div>
+      </>
     </div>
   );
 };
