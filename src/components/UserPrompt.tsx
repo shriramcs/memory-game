@@ -37,11 +37,12 @@ const UserPrompt: React.FC<UserPromptProps> = ({ onStartGame }) => {
         value={numPlayers}
         onChange={(e) => setNumPlayers(Number(e.target.value))}
       />
-      <h3>Enter Player Names</h3>
+      <h3><label htmlFor="playerCount">Enter Player Names</label></h3>
       {[...Array(numPlayers)].map((_, index) => (
         <input
           key={index}
           type="text"
+          id="playerCount"
           placeholder={`Player ${index + 1} Name`}
           onChange={(e) => handleInputChange(index, e.target.value)}
         />

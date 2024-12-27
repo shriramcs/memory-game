@@ -45,6 +45,29 @@ const GameBoard: React.FC<GameBoardProps> = ({ players, onRestart }) => {
     }
   }, [cards]);
 
+  // useEffect(() => {
+  //   const savedScores = localStorage.getItem('scores');
+  //   const savedCards = localStorage.getItem('cards');
+  //   const savedCurrentPlayer = localStorage.getItem('currentPlayer');
+  
+  //   if (savedScores) {
+  //     setScores(JSON.parse(savedScores));
+  //   }
+  //   if (savedCards) {
+  //     setCards(JSON.parse(savedCards));
+  //   }
+  //   if (savedCurrentPlayer) {
+  //     setCurrentPlayer(Number(savedCurrentPlayer));
+  //   }
+  // }, []);
+  
+  // useEffect(() => {
+  //   localStorage.setItem('scores', JSON.stringify(scores));
+  //   localStorage.setItem('cards', JSON.stringify(cards));
+  //   localStorage.setItem('currentPlayer', currentPlayer.toString());
+  // }, [scores, cards, currentPlayer]);
+  
+
   const handleCardClick = (index: number) => {
     if (gameOver || flippedCards.length === 2 || cards[index].matched || flippedCards.includes(index)) {
       return;
@@ -84,6 +107,7 @@ const GameBoard: React.FC<GameBoardProps> = ({ players, onRestart }) => {
 
   return (
     <div className="game-board">
+      gameOver: {gameOver}
       {gameOver && (
         <div className="banner">
           <h2>{winnerMessage}</h2>
@@ -100,14 +124,14 @@ const GameBoard: React.FC<GameBoardProps> = ({ players, onRestart }) => {
         </div>
         <div className="grid">
           {cards.map((card, index) => (
-            <div
+            <button
               key={card.id}
               className={`card ${flippedCards.includes(index) || card.matched ? 'flipped' : ''}`}
               onClick={() => handleCardClick(index)}
               style={{ backgroundColor: flippedCards.includes(index) || card.matched ? card.color : '#f0f0f0' }}
             >
-              {flippedCards.includes(index) || card.matched ? card.image : '?'}
-            </div>
+              {flippedCards.includes(index) || card.matched ? card.image : '🎁'}
+            </button>
           ))}
         </div>
       </>

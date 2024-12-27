@@ -37,7 +37,7 @@
   margin-bottom: 20px;
 }
 
-button {
+/* button {
   margin-top: 20px;
   padding: 10px 20px;
   background-color: #4caf50;
@@ -46,11 +46,11 @@ button {
   border-radius: 5px;
   cursor: pointer;
   font-size: 1em;
-}
+} */
 
-button:hover {
+/* button:hover {
   background-color: #45a049;
-}
+} */
 
 /* Success Banner */
 /* Keyframes for zoom-out animation */
