@@ -10,15 +10,9 @@
   border-radius: 5px;
 }
 
-.player-input {
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
 button {
   margin-top: 10px;
+  margin-left: 20px;
   padding: 10px 20px;
   background-color: #2196f3;
   color: white;

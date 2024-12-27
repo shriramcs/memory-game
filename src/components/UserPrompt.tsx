@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './UserPrompt.css';
+
 
 interface UserPromptProps {
   onStartGame: (playerNames: string[]) => void;
@@ -30,7 +32,7 @@ const UserPrompt: React.FC<UserPromptProps> = ({ onStartGame }) => {
       <h3>Enter Number of Players</h3>
       <input
         type="number"
-        min="2"
+        min="1"
         max="4"
         value={numPlayers}
         onChange={(e) => setNumPlayers(Number(e.target.value))}
@@ -38,7 +40,6 @@ const UserPrompt: React.FC<UserPromptProps> = ({ onStartGame }) => {
       <h3>Enter Player Names</h3>
       {[...Array(numPlayers)].map((_, index) => (
         <input
-          className="player-input"
           key={index}
           type="text"
           placeholder={`Player ${index + 1} Name`}
