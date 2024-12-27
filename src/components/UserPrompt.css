@@ -1,6 +1,26 @@
+.header-name{
+  color: rgb(72, 72, 226);
+}
+
+.pair1{
+  height: 10px;
+  width: 10px;
+  margin: 2px;
+  background-color: rgb(127, 127, 236);
+}
+.pair2{
+  margin: 2px;
+  height: 10px;
+  width: 10px;
+  background-color: rgb(127, 127, 236);
+}
+
+
 .user-prompt {
   text-align: center;
   margin: 20px;
+  display: grid;
+  place-items: center;
 }
 
 .user-prompt input {
@@ -24,4 +44,70 @@ button {
 
 button:hover {
   background-color: #0b7dda;
+}
+
+
+
+/* Logo animation */
+
+/* Logo Container */
+.logo {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Card Base Styles */
+.logo-card {
+  width: 80px;
+  height: 100px;
+  background-color: #fff;
+  border: 3px solid #007BFF;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #007BFF;
+  position: absolute;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, content 0.3s ease; /* Smooth transition for hover effects */
+}
+
+/* First Card Style */
+.logo-card1 {
+  transform: rotate(-10deg);
+  z-index: 2;
+}
+
+/* Second Card Style */
+.logo-card2 {
+  transform: rotate(10deg);
+  left: 10px;
+  z-index: 1;
+  border-color: #DC3545;
+  color: #DC3545;
+}
+
+/* Hover Animation */
+.logo:hover .logo-card1 {
+  transform: rotate(20deg) translateX(30px) translateY(-5px);
+}
+
+.logo:hover .logo-card2 {
+  transform: rotate(-20deg) translateX(-30px) translateY(5px);
+}
+
+/* Dynamic Content Change */
+.logo-card::before {
+  content: '?';
+  transition: content 0.3s ease;
+}
+
+.logo:hover .logo-card::before {
+  content: '🎁';
 }
